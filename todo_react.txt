@@ -1,0 +1,42 @@
+import React, { useState } from "react";
+
+export function todo() {
+  const [todos, setTodos] = useState([]);//yha pr input values array me store hogi then maping se dispaly hogi
+
+  const [inputValue, setInputValue] = useState("");//just for empty a input after submit
+
+  const handleSubmit = (event) => {
+
+    event.preventDefault(); // Prevent default form submission behavior
+
+    const newTodo = {
+      id: Date.now(), // Generate a unique ID
+      task: inputValue,
+      completed: false,
+    };
+
+    setTodos([...todos, newTodo]); // Update the todos state with the new todo
+    setInputValue(""); // Clear the input field after adding
+  };
+
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <div className="TodoList">
+        <form className="NewTodoForm" onSubmit={handleSubmit}>
+          <input id="task" type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+          <button>Add</button>
+        </form>
+        <h3>todo's</h3>
+        <ul>
+          {todos.map((todo) => (
+            <li key={todo.id}>
+              {todo.task}
+            </li>))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default todo;
